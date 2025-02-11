@@ -36,6 +36,12 @@ jobs:
       - name: Debug GCP Credentials
         run: cat $GOOGLE_APPLICATION_CREDENTIALS
 
+      - name: Save GCP Credentials for Debugging
+        uses: actions/upload-artifact@v2
+        with:
+          name: gcp-key
+          path: $GOOGLE_APPLICATION_CREDENTIALS
+
       - name: Build Project
         env:
           GOOGLE_APPLICATION_CREDENTIALS: "${{ runner.temp }}/gcp-key.json"
