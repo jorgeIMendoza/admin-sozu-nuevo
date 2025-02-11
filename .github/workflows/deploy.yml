@@ -30,11 +30,17 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS_RUTA: "${{ runner.temp }}/gcp-key.json"
         run: |
           echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS_RUTA
-          export GOOGLE_APPLICATIONS_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS_RUTA
+          export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS_RUTA
           echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
 
       - name: Debug GCP Credentials
         run: cat $GOOGLE_APPLICATION_CREDENTIALS
+
+      - name: Save GCP Credentials for Debugging
+        uses: actions/upload-artifact@v2
+        with:
+          name: gcp-key
+          path: $GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Build Project
         env:
