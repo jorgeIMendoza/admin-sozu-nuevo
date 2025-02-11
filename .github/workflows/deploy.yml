@@ -31,6 +31,10 @@ jobs:
         run: |
           echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS_RUTA
           export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS_RUTA
+          echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
+
+      - name: Debug GCP Credentials
+        run: cat $GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Build Project
         env:
