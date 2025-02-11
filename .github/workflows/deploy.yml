@@ -37,7 +37,7 @@ jobs:
         run: cat $GOOGLE_APPLICATION_CREDENTIALS
 
       - name: Save GCP Credentials for Debugging
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: gcp-key
           path: $GOOGLE_APPLICATION_CREDENTIALS
