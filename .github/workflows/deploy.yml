@@ -27,10 +27,10 @@ jobs:
 
       - name: Configure GCP Credentials
         env:
-          GOOGLE_APPLICATION_CREDENTIALS: "${{ runner.temp }}/gcp-key.json"
+          GOOGLE_APPLICATION_CREDENTIALS_RUTA: "${{ runner.temp }}/gcp-key.json"
         run: |
-          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS
-          export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS_RUTA
+          export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS_RUTA
 
       - name: Build Project
         env:
@@ -39,7 +39,7 @@ jobs:
 
       - name: Select Firebase Project and Deploy
         env:
-            FIREBASE_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
         run: |
           if [ "${{ github.ref_name }}" == "main" ]; then
             firebase use prod
