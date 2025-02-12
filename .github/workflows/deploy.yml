@@ -29,8 +29,7 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS_RUTA: "${{ runner.temp }}/gcp-key.json"
         run: |
-          # Escapar las comillas dobles dentro del JSON del secreto GCP
-          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | sed 's/"/\\"/g' > $GOOGLE_APPLICATION_CREDENTIALS_RUTA
+          echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" | jq -r . > $GOOGLE_APPLICATION_CREDENTIALS_RUTA
           export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS_RUTA
           echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
           ls -l $GOOGLE_APPLICATION_CREDENTIALS_RUTA
