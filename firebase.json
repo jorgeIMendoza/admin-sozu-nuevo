@@ -1,7 +1,13 @@
 {
   "hosting": {
-    "public": "dist",
+    "public": ".output/public",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "**",
+        "function": "nuxtApp"
+      }
+    ],
     "env": {
       "FIREBASE_API_KEY": "projects/sozu-admin-dev/secrets/FIREBASE_API_KEY",
       "FIREBASE_AUTH_DOMAIN": "projects/sozu-admin-dev/secrets/FIREBASE_AUTH_DOMAIN",

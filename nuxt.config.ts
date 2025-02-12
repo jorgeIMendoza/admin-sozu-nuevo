@@ -35,7 +35,7 @@ export default defineNuxtConfig({
   target: 'static', // Para un proyecto estático
 
   nitro: {
-    preset: 'static'
+    preset: 'firebase'
   },
 
   // build settings

@@ -57,7 +57,7 @@ jobs:
           GOOGLE_APPLICATION_CREDENTIALS: "${{ runner.temp }}/gcp-actions-key.json"
         run: |
           if [ "${{ github.ref_name }}" == "main" ]; then
-            firebase deploy --only hosting --project sozu-admin
+            firebase deploy --only hosting,functions --project sozu-admin
           else
-            firebase deploy --only hosting --project sozu-admin-dev
+            firebase deploy --only hosting,functions --project sozu-admin-dev
           fi

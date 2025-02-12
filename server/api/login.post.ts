@@ -3,7 +3,9 @@ import admin from 'firebase-admin';
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event); // Leer datos enviados desde el frontend
-    console.debug('BODY: ', body);
+    console.log('BODY: ', body);
+    console.log(JSON.stringify({ level: "info", message: "BODY", data: body }));
+
 
     const { idToken } = body;
 
@@ -11,7 +13,7 @@ export default defineEventHandler(async (event) => {
       throw new Error('ID Token no proporcionado.');
     }
 
-    console.debug('Verificando ID Token...');
+    console.log('Verificando ID Token...');
     // Inicializar firebase-admin si aún no está inicializado
     if (!admin.apps.length) {
       admin.initializeApp({
@@ -30,13 +32,13 @@ export default defineEventHandler(async (event) => {
     const decodedToken = await auth.verifyIdToken(idToken);
     const email = decodedToken.email;
 
-    console.debug('Token verificado. Usuario: ', email);
+    console.log('Token verificado. Usuario: ', email);
 
     // Verificar si el usuario es interno o externo
     const isInternal = email.endsWith('@sozu.com');
     const rolId = isInternal ? 'interno' : 'externo';
 
-    console.debug(`Usuario identificado como: ${isInternal ? 'Interno' : 'Externo'}`);
+    console.log(`Usuario identificado como: ${isInternal ? 'Interno' : 'Externo'}`);
 
     // Guardar/Actualizar el usuario en Firestore
     const userRef = db.collection('usuarios').doc(decodedToken.uid);
@@ -49,7 +51,7 @@ export default defineEventHandler(async (event) => {
       { merge: true } // Actualiza solo campos proporcionados
     );
 
-    console.debug('Usuario guardado/actualizado en Firestore.');
+    console.log('Usuario guardado/actualizado en Firestore.');
 
     return {
       message: 'Usuario autenticado y guardado correctamente.',
