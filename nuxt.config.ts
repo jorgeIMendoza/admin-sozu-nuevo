@@ -35,7 +35,17 @@ export default defineNuxtConfig({
   target: 'static', // Para un proyecto estático
 
   nitro: {
-    preset: 'firebase'
+    preset: 'firebase', // Asegura que Nitro use Firebase
+    firebase: {
+      gen: 2, // Usa Cloud Functions 2nd Gen
+    },
+    prerender: {
+      routes: ['/'],
+    },
+    output: {
+      serverDir: '.output/server',
+      publicDir: '.output/public',
+    },
   },
 
   // build settings
@@ -95,6 +105,7 @@ export default defineNuxtConfig({
 
   plugins: [
     '~/plugins/firebase.client.ts',
+    '~/plugins/loadSecrets.ts',
   ],
 
   compatibilityDate: '2025-01-09',

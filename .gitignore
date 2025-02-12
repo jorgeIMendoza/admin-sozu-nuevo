@@ -7,7 +7,7 @@
 dist
 .vscode
 .firebase
-
+archivo-claves.json
 
 
 # Node dependencies
