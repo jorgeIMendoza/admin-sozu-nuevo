@@ -31,17 +31,17 @@ jobs:
         run: |
           echo "${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}" > $GOOGLE_APPLICATION_CREDENTIALS_RUTA
           export GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS_RUTA
-          echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
-          ls -l $GOOGLE_APPLICATION_CREDENTIALS_RUTA
+      # echo "GOOGLE_APPLICATION_CREDENTIALS=$GOOGLE_APPLICATION_CREDENTIALS"
+      # ls -l $GOOGLE_APPLICATION_CREDENTIALS_RUTA
 
-      - name: Debug GCP Credentials
-        run: cat $GOOGLE_APPLICATION_CREDENTIALS
+      # - name: Debug GCP Credentials
+      #   run: cat $GOOGLE_APPLICATION_CREDENTIALS
 
-      - name: Save GCP Credentials for Debugging
-        uses: actions/upload-artifact@v4
-        with:
-          name: gcp-key
-          path: ${{ runner.temp }}/gcp-key.json
+      # - name: Save GCP Credentials for Debugging
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: gcp-key
+      #     path: ${{ runner.temp }}/gcp-key.json
 
       - name: Build Project
         env:
@@ -50,11 +50,10 @@ jobs:
 
       - name: Select Firebase Project and Deploy
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_DEPLOY_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: "${{ runner.temp }}/gcp-key.json"
         run: |
           if [ "${{ github.ref_name }}" == "main" ]; then
-            firebase use prod
+            firebase deploy --only hosting --project sozu-admin
           else
-            firebase use test
+            firebase deploy --only hosting --project sozu-admin-dev
           fi
-          firebase deploy --only hosting --token "$FIREBASE_TOKEN"
