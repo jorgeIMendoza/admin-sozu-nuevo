@@ -1,8 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { loadSecrets } from './plugins/loadSecrets'
-
-// Cargar los secretos antes de definir la configuración de Nuxt
-await loadSecrets()
+import { loadSecrets } from './server/utils/loadSecrets'
 
 export default defineNuxtConfig({
   app: {
@@ -35,6 +32,11 @@ export default defineNuxtConfig({
   target: 'static', // Para un proyecto estático
 
   nitro: {
+    hooks: {
+      async 'nitro:config'(nitroConfig) {
+        await loadSecrets()
+      },
+    },
     preset: 'firebase', // Asegura que Nitro use Firebase
     firebase: {
       gen: 2, // Usa Cloud Functions 2nd Gen
@@ -105,7 +107,6 @@ export default defineNuxtConfig({
 
   plugins: [
     '~/plugins/firebase.client.ts',
-    '~/plugins/loadSecrets.ts',
   ],
 
   compatibilityDate: '2025-01-09',

@@ -10,7 +10,7 @@ async function getSecret(secretName: string): Promise<string> {
   });
 
   // Retorna el valor del secreto como una cadena
-  return version.payload.data.toString();
+  return version.payload?.data?.toString() || '';
 }
 
 // Función principal para cargar los secretos
@@ -43,4 +43,4 @@ export async function loadSecrets() {
 }
 
 // Ejecuta la función para cargar los secretos
-loadSecrets();
+//loadSecrets();
